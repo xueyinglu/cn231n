@@ -79,10 +79,9 @@ class TwoLayerNet(object):
         # shape (N, C).                                                             #
         #############################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-
-        h1 = X.dot(W1) + b1       # fully connected
-        X2 = np.maximum(0, h1)    # ReLu
-        scores = X2.dot(W2) + b2  # fully connected
+        f = lambda x: np.maximum(0, x)  # ReLU activation function
+        h1 = f(X.dot(W1) + b1)          # hidden layer 1
+        scores = h1.dot(W2) + b2        # fully connected
 
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
@@ -123,7 +122,7 @@ class TwoLayerNet(object):
         softmax_matrix /= N
 
         # W2 gradient
-        dW2 = X2.T.dot(softmax_matrix)
+        dW2 = h1.T.dot(softmax_matrix)
 
         # b2 gradient
         db2 = softmax_matrix.sum(axis = 0)
